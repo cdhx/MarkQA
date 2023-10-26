@@ -44,7 +44,6 @@ This repository is structured as follows:
 MarkQA/
 ├─ data/: Data files for training, validation, and test
 ├─ PyQL_parser.py: The implementation of PyQL.
-├─ tailor_kb.py: The script we use to tailor Wikidata, you can directly use our [processed dump](https://developers.google.com/freebase).   
 ├─ T5/: Baseline method of T5, coming soon!
 ├─ GMT-KBQA/: Baseline method of GMT-KBQA, coming soon!
 └── QDTQA/: Baseline method of QDTQA, coming soon!
