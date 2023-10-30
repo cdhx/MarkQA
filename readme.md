@@ -25,7 +25,7 @@ They can be downloaded via wget and then be put together via cat:
 
 (WARNING: 200G+ disk space is needed for the ziped file and 440G+ disk space is needed for the unziped file)
 ```linux
-wget https://box.nju.edu.cn/f/bb40302251e9417b8575/?dl=1 -O virtuoso_db_part1
+wget https://box.nju.edu.cn/f/edd62b714b6b4fefb84e/?dl=1 -O virtuoso_db_part1
 wget https://box.nju.edu.cn/f/3b0986513ff2409db5df/?dl=1 -O virtuoso_db_part2
 cat virtuoso_db_part1 virtuoso_db_part2 >virtuoso_db.zip
 ```
