@@ -63,9 +63,9 @@ This repository is structured as follows:
 MarkQA/
 ├─ data/: Data files for training, validation, and test, coming soon!
 ├─ PyQL_parser.py: The implementation of PyQL.
-├─ T5/: Baseline method of T5, coming soon!
-├─ GMT-KBQA/: Baseline method of GMT-KBQA, coming soon!
-└── QDTQA/: Baseline method of QDTQA, coming soon!
+├─ T5/: Baseline method of T5
+├─ GMT-KBQA/: Baseline method of GMT-KBQA
+└── QDTQA/: Baseline method of QDTQA
 ```  
 
 
