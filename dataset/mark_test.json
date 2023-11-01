@@ -1,7 +1,8 @@
 [
     {
         "ID": "17162215568_all_17-1-entities(1)-hops(2)",
-        "question": "What is the percentage increase in the number of households in Vaishali district compared to the municipality of the Netherlands that is twinned with the commune of France where Like hit ! is located and is part of Twente in 2011?"
+        "question": "What is the percentage increase in the number of households in Vaishali district compared to the municipality of the Netherlands that is twinned with the commune of France where Like hit ! is located and is part of Twente in 2011?",
+        "comp_level": "iid"
     },
     {
         "ID": "121512761108210263_6-1-entities(2)-hops(1)",
