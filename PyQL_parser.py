@@ -13,7 +13,7 @@ import re
 import copy
 class PyQL():
     def __init__(self):
-        self.head = ''ｓｕ
+        self.head = ''
         self.head_already_set = False  # If it's an automatic head, it can be modified
         self.answer = '*'
         self.var = []
