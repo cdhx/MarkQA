@@ -78,6 +78,6 @@ title={Mark{QA}: A large scale {KBQA} dataset with numerical reasoning},
 author={Xiang Huang, Sitao Cheng, Yuheng Bao, Shanshan Huang, Yuzhong Qu },
 booktitle={The 2023 Conference on Empirical Methods in Natural Language Processing},
 year={2023},
-url={https://openreview.net/forum?id=NYstQhld8J}
+url={https://arxiv.org/abs/2310.15517}
 }
 ```
