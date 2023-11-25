@@ -8,7 +8,7 @@
 
 >MarkQA is a lare-scale dataset for question answering on knowledge bases (KBQA) on Wikidata, with 31,902 questions. Each quesstion is annotated with answers, SPARQL, QDMR and PyQL. It is the first dataset focus on complex numerical reasoning in KBQA.
 
->This is the accompanying code for the paper "[MarkQA: A large scale KBQA dataset with numerical reasoning](http://arxiv.org/abs/2310.15517)" published at EMNLP 2023. For dataset and leaderboard, please refer to the [homepage of MarkQA](http://ws.nju.edu.cn/MarkQA). In this repository, we provide the code for the baseline models for reproducibility and demonstrate how to work with this dataset.
+>This is the accompanying code for the paper "[MarkQA: A large scale KBQA dataset with numerical reasoning](http://arxiv.org/abs/2310.15517)" published at EMNLP 2023. For dataset and leaderboard, please refer to the [homepage of MarkQA](http://ws.nju.edu.cn/MarkQA). The document of PyQL can be found in [document of PyQL](https://shanshan-huang-1.gitbook.io/pyql-wen-dang/). In this repository, we provide the code for the baseline models for reproducibility and demonstrate how to work with this dataset.
   
  
 
