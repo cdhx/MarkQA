@@ -1,0 +1,458 @@
+[
+ {
+  "property": [
+   "P31",
+   "instance of"
+  ],
+  "existence_ratio": 1.0,
+  "avg_object_set_size": 1.23
+ },
+ {
+  "property": [
+   "P516",
+   "powered by"
+  ],
+  "existence_ratio": 0.96,
+  "avg_object_set_size": 1.6979166666666667
+ },
+ {
+  "property": [
+   "P279",
+   "subclass of"
+  ],
+  "existence_ratio": 0.91,
+  "avg_object_set_size": 1.4065934065934067
+ },
+ {
+  "property": [
+   "P2043",
+   "length"
+  ],
+  "existence_ratio": 0.89,
+  "avg_object_set_size": 1.1235955056179776
+ },
+ {
+  "property": [
+   "P2049",
+   "width"
+  ],
+  "existence_ratio": 0.89,
+  "avg_object_set_size": 1.0786516853932584
+ },
+ {
+  "property": [
+   "P3039",
+   "wheelbase"
+  ],
+  "existence_ratio": 0.88,
+  "avg_object_set_size": 1.0681818181818181
+ },
+ {
+  "property": [
+   "P2048",
+   "height"
+  ],
+  "existence_ratio": 0.86,
+  "avg_object_set_size": 1.1046511627906976
+ },
+ {
+  "property": [
+   "P176",
+   "manufacturer"
+  ],
+  "existence_ratio": 0.85,
+  "avg_object_set_size": 1.2
+ },
+ {
+  "property": [
+   "P1716",
+   "brand"
+  ],
+  "existence_ratio": 0.76,
+  "avg_object_set_size": 1.013157894736842
+ },
+ {
+  "property": [
+   "P2067",
+   "mass"
+  ],
+  "existence_ratio": 0.68,
+  "avg_object_set_size": 1.1176470588235294
+ },
+ {
+  "property": [
+   "P155",
+   "follows"
+  ],
+  "existence_ratio": 0.6,
+  "avg_object_set_size": 1.2833333333333334
+ },
+ {
+  "property": [
+   "P156",
+   "followed by"
+  ],
+  "existence_ratio": 0.57,
+  "avg_object_set_size": 1.1754385964912282
+ },
+ {
+  "property": [
+   "P1071",
+   "location of creation"
+  ],
+  "existence_ratio": 0.53,
+  "avg_object_set_size": 1.6981132075471699
+ },
+ {
+  "property": [
+   "P2052",
+   "speed"
+  ],
+  "existence_ratio": 0.39,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P1092",
+   "total produced"
+  ],
+  "existence_ratio": 0.34,
+  "avg_object_set_size": 1.088235294117647
+ },
+ {
+  "property": [
+   "P527",
+   "has part(s)"
+  ],
+  "existence_ratio": 0.23,
+  "avg_object_set_size": 1.2173913043478262
+ },
+ {
+  "property": [
+   "P287",
+   "designed by"
+  ],
+  "existence_ratio": 0.22,
+  "avg_object_set_size": 1.2272727272727273
+ },
+ {
+  "property": [
+   "P910",
+   "topic's main category"
+  ],
+  "existence_ratio": 0.22,
+  "avg_object_set_size": 1.0454545454545454
+ },
+ {
+  "property": [
+   "P1083",
+   "maximum capacity"
+  ],
+  "existence_ratio": 0.21,
+  "avg_object_set_size": 1.1428571428571428
+ },
+ {
+  "property": [
+   "P8594",
+   "ride height"
+  ],
+  "existence_ratio": 0.21,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P8621",
+   "turning radius"
+  ],
+  "existence_ratio": 0.21,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P2670",
+   "has part(s) of the class"
+  ],
+  "existence_ratio": 0.2,
+  "avg_object_set_size": 4.95
+ },
+ {
+  "property": [
+   "P2436",
+   "voltage"
+  ],
+  "existence_ratio": 0.2,
+  "avg_object_set_size": 1.05
+ },
+ {
+  "property": [
+   "P4511",
+   "vertical depth"
+  ],
+  "existence_ratio": 0.2,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P4519",
+   "payload mass"
+  ],
+  "existence_ratio": 0.2,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P6533",
+   "type of front suspension"
+  ],
+  "existence_ratio": 0.2,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P8597",
+   "axle track"
+  ],
+  "existence_ratio": 0.2,
+  "avg_object_set_size": 1.2
+ },
+ {
+  "property": [
+   "P6534",
+   "type of rear suspension"
+  ],
+  "existence_ratio": 0.2,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P2234",
+   "volume as quantity"
+  ],
+  "existence_ratio": 0.19,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P1889",
+   "different from"
+  ],
+  "existence_ratio": 0.16,
+  "avg_object_set_size": 1.25
+ },
+ {
+  "property": [
+   "P641",
+   "sport"
+  ],
+  "existence_ratio": 0.11,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P179",
+   "part of the series"
+  ],
+  "existence_ratio": 0.11,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P793",
+   "significant event"
+  ],
+  "existence_ratio": 0.1,
+  "avg_object_set_size": 1.8
+ },
+ {
+  "property": [
+   "P495",
+   "country of origin"
+  ],
+  "existence_ratio": 0.09,
+  "avg_object_set_size": 1.2222222222222223
+ },
+ {
+  "property": [
+   "P17",
+   "country"
+  ],
+  "existence_ratio": 0.09,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P2109",
+   "installed capacity"
+  ],
+  "existence_ratio": 0.05,
+  "avg_object_set_size": 1.2
+ },
+ {
+  "property": [
+   "P2073",
+   "vehicle range"
+  ],
+  "existence_ratio": 0.04,
+  "avg_object_set_size": 1.25
+ },
+ {
+  "property": [
+   "P4140",
+   "energy storage capacity"
+  ],
+  "existence_ratio": 0.04,
+  "avg_object_set_size": 2.5
+ },
+ {
+  "property": [
+   "P2664",
+   "units sold"
+  ],
+  "existence_ratio": 0.03,
+  "avg_object_set_size": 1.6666666666666667
+ },
+ {
+  "property": [
+   "P144",
+   "based on"
+  ],
+  "existence_ratio": 0.03,
+  "avg_object_set_size": 1.3333333333333333
+ },
+ {
+  "property": [
+   "P6497",
+   "drag coefficient"
+  ],
+  "existence_ratio": 0.03,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P2283",
+   "uses"
+  ],
+  "existence_ratio": 0.02,
+  "avg_object_set_size": 1.5
+ },
+ {
+  "property": [
+   "P2284",
+   "price"
+  ],
+  "existence_ratio": 0.02,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P88",
+   "commissioned by"
+  ],
+  "existence_ratio": 0.02,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P4969",
+   "derivative work"
+  ],
+  "existence_ratio": 0.02,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P1343",
+   "described by source"
+  ],
+  "existence_ratio": 0.02,
+  "avg_object_set_size": 1.5
+ },
+ {
+  "property": [
+   "P618",
+   "source of energy"
+  ],
+  "existence_ratio": 0.02,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P186",
+   "made from material"
+  ],
+  "existence_ratio": 0.02,
+  "avg_object_set_size": 2.0
+ },
+ {
+  "property": [
+   "P366",
+   "has use"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P137",
+   "operator"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P747",
+   "has edition or translation"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P1366",
+   "replaced by"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P167",
+   "structure replaced by"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P1535",
+   "used by"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P588",
+   "coolant"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P608",
+   "exhibition history"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ },
+ {
+  "property": [
+   "P1100",
+   "number of cylinders"
+  ],
+  "existence_ratio": 0.01,
+  "avg_object_set_size": 1.0
+ }
+]

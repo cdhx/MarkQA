@@ -1,0 +1,292 @@
+from torch.utils.data import Dataset
+import torch
+
+IGONORED_DOMAIN_LIST = ['type', 'common', 'kg', 'dataworld']
+
+
+def _tokenize_relation(r):
+    return r.replace('.', ' ').replace('_', ' ').split()
+
+class MTLGenerationExample:
+    """
+    Multi Task Generation Example
+    """
+    def __init__(self, dict_data):
+        """ Initialize from dict data"""
+        self.ID = dict_data['ID']
+        self.question = dict_data['question']
+        self.comp_type = ""    #设置为空
+        self.sparql = dict_data.get('sparql', 'None')
+        self.sexpr = ""   #设置为空
+        self.normed_sexpr = ""  #设置为空
+        
+        self.normed_sexpr = dict_data.get('normed_sexpr', 'None')
+        self.gold_entity_map = dict_data.get('gold_entity_map', {})
+        self.gold_relation_map = dict_data.get('gold_relation_map', {})
+        self.gold_type_map = {}         #设置为空
+        self.cand_relation_list = dict_data.get('cand_relation_list', [])
+        self.answer = dict_data.get('answer', [])
+        self.cand_entity_list = dict_data.get('cand_entity_list', [])
+        self.disambiguated_cand_entity = dict_data.get('disambiguated_cand_entity', [])
+
+
+    def __str__(self) -> str:
+        return f'{self.question}\n\t->{self.normed_sexpr}'
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+
+class MTLGenDataset(Dataset):
+    """Dataset for MTLGeneration"""
+
+    def __init__(
+        self, 
+        examples, 
+        tokenizer, 
+        do_lower=True,
+        normalize_relations=False,
+        max_src_len=256, 
+        max_tgt_len=196,
+        add_prefix=False,
+    ):
+        # super().__init__()
+        self.examples = examples
+        self.tokenizer = tokenizer
+        self.do_lower = do_lower
+        self.normalize_relations = normalize_relations
+        self.max_src_len = max_src_len
+        self.max_tgt_len = max_tgt_len
+        self.add_prefix = add_prefix
+        self.REL_TOKEN = ' [REL] '
+        self.ENT_TOKEN = ' [ENT] '
+        self.LITERAL_TOKEN = ' [LIT] '
+        self.SEPERATOR = ' | '
+    
+    def __len__(self):
+        return len(self.examples)
+
+    def __getitem__(self, index):
+        example = self.examples[index]
+        ID = example.ID
+        question = example.question
+
+        normed_sexpr = example.normed_sexpr
+        candidate_relations = [x[0] for x in example.cand_relation_list]
+        gold_relation_set = set(example.gold_relation_map.keys())
+        
+        relation_labels = [(rel in gold_relation_set) for rel in candidate_relations]
+        relation_clf_pairs_labels = torch.LongTensor(relation_labels)
+
+        # entity id identifies diffrent entities
+        gold_entities_ids_set = set([item.lower() for item in example.gold_entity_map.keys()])
+
+        entity_labels = [(ent['id'] in gold_entities_ids_set) for ent in example.cand_entity_list]
+        entity_clf_pairs_labels = torch.LongTensor(entity_labels)
+
+        input_src = question
+
+        if self.do_lower:
+            input_src = input_src.lower()
+            normed_sexpr = normed_sexpr.lower()
+        
+        gen_src = input_src
+        if self.add_prefix:
+            gen_src = 'Translate to S-Expression: ' + input_src
+        if self.do_lower:
+            gen_src = gen_src.lower()
+        tokenized_src = self.tokenizer(
+                        gen_src,
+                        max_length=self.max_src_len,
+                        truncation=True,
+                        return_tensors='pt',
+                        ).data['input_ids'].squeeze(0)
+        
+        # Concatenate candidate entities & relations
+        gen_src_concatenated = input_src
+        gen_src_concatenated_goldE_candR = input_src
+        gen_src_concatenated_candE_goldR = input_src
+        if self.add_prefix:
+            gen_src_concatenated = 'Translate to S-Expression: ' + gen_src_concatenated
+            gen_src_concatenated_goldE_candR = 'Translate to S-Expression: ' + gen_src_concatenated_goldE_candR
+            gen_src_concatenated_candE_goldR = 'Translate to S-Expression: ' + gen_src_concatenated_candE_goldR
+        for rel in example.cand_relation_list:
+            logits = float(rel[1])
+            if logits >= 0.0:
+                if self.normalize_relations:
+                    gen_src_concatenated += self.REL_TOKEN + _textualize_relation(rel[2])
+                    gen_src_concatenated_goldE_candR += self.REL_TOKEN + _textualize_relation(rel[2])
+                else:
+                    gen_src_concatenated += self.REL_TOKEN + rel[2]
+                    gen_src_concatenated_goldE_candR += self.REL_TOKEN + rel[2]
+        gen_src_concatenated += self.SEPERATOR
+        gen_src_concatenated_goldE_candR += self.SEPERATOR
+        # 为goldR_candE添加goldR关系
+        for rel in example.gold_relation_map:
+            if self.normalize_relations:
+                gen_src_concatenated_candE_goldR += self.REL_TOKEN + _textualize_relation(example.gold_relation_map[rel].split("|")[-1])
+            else:
+                gen_src_concatenated_candE_goldR += self.REL_TOKEN + example.gold_relation_map[rel].split("|")[-1]
+
+
+        for ent in example.disambiguated_cand_entity:
+            gen_src_concatenated += self.ENT_TOKEN + ent['label']
+            gen_src_concatenated_candE_goldR += self.ENT_TOKEN + ent['label']
+        gen_src_concatenated += self.SEPERATOR
+        gen_src_concatenated_candE_goldR += self.SEPERATOR
+        # 为goldE_candR添加goldE
+        for mid in example.gold_entity_map:
+            gen_src_concatenated_goldE_candR += self.ENT_TOKEN + example.gold_entity_map[mid] # concat label
+        gen_src_concatenated_goldE_candR += self.SEPERATOR
+
+        if self.do_lower:
+            gen_src_concatenated = gen_src_concatenated.lower()
+            gen_src_concatenated_goldE_candR = gen_src_concatenated_goldE_candR.lower()
+            gen_src_concatenated_candE_goldR = gen_src_concatenated_candE_goldR.lower()
+
+        tokenized_src_concatenated = self.tokenizer(
+            gen_src_concatenated,
+            max_length=self.max_src_len,
+            truncation=True,
+            return_tensors='pt',
+        ).data['input_ids'].squeeze(0)
+    
+
+        tokenized_src_concatenated_goldE_candR = self.tokenizer(
+            gen_src_concatenated_goldE_candR,
+            max_length=self.max_src_len,
+            truncation=True,
+            return_tensors='pt',
+        ).data['input_ids'].squeeze(0)
+
+        tokenized_src_concatenated_candE_goldR = self.tokenizer(
+            gen_src_concatenated_candE_goldR,
+            max_length=self.max_src_len,
+            truncation=True,
+            return_tensors='pt',
+        ).data['input_ids'].squeeze(0)
+
+        # concatenate golden entities/relations
+        gen_src_golden_concatenated = input_src
+        if self.add_prefix:
+            gen_src_golden_concatenated = 'Translate to S-Expression: ' + gen_src_golden_concatenated
+        for rel in example.gold_relation_map:
+            if self.normalize_relations:
+                gen_src_golden_concatenated += self.REL_TOKEN + _textualize_relation(example.gold_relation_map[rel].split("|")[-1])# 使用label!!
+            else:
+                gen_src_golden_concatenated += self.REL_TOKEN + example.gold_relation_map[rel].split("|")[-1]
+        gen_src_golden_concatenated += self.SEPERATOR
+        for mid in example.gold_entity_map:
+            gen_src_golden_concatenated += self.ENT_TOKEN + example.gold_entity_map[mid] # concat label
+        gen_src_golden_concatenated += self.SEPERATOR
+
+        if self.do_lower:
+            gen_src_golden_concatenated = gen_src_golden_concatenated.lower()
+        
+        tokenized_src_golden_concatenated = self.tokenizer(
+            gen_src_golden_concatenated,
+            max_length=self.max_src_len,
+            truncation=True,
+            return_tensors='pt',
+        ).data['input_ids'].squeeze(0)
+
+
+        with self.tokenizer.as_target_tokenizer():
+            tokenized_tgt = self.tokenizer(
+                normed_sexpr,
+                max_length=self.max_tgt_len,
+                truncation=True,
+                return_tensors='pt',
+            ).data['input_ids'].squeeze(0)
+        
+        tokenized_relation_clf_pairs = []
+        
+        for cand_rel in candidate_relations:
+            if self.normalize_relations:
+                cand_rel = _textualize_relation(cand_rel)
+            
+            rel_src = input_src
+            if self.add_prefix:
+                rel_src = 'Relation Classification: ' + rel_src
+            
+            if self.do_lower:
+                rel_src = rel_src.lower()
+                cand_rel = cand_rel.lower()
+
+            tokenized_relation_pair = self.tokenizer(
+                rel_src,
+                cand_rel,
+                max_length=self.max_src_len,
+                truncation=True,
+                return_tensors='pt',
+            ).data['input_ids'].squeeze(0)
+            
+            tokenized_relation_clf_pairs.append(tokenized_relation_pair)
+
+        tokenized_entity_clf_pairs = []
+        question_tokens = question.split(' ')
+        
+        for cand_ent in example.cand_entity_list:
+            label = cand_ent['label']
+            def key_func(r):
+                r_tokens = _tokenize_relation(r)
+                overlapping_val = len(set(question_tokens) & set(r_tokens))
+                return(
+                    -overlapping_val
+                )
+            
+            one_hop_relations = cand_ent['1hop_relations']
+            one_hop_relations = [x for x in one_hop_relations if x.split('.')[0] not in IGONORED_DOMAIN_LIST]
+            one_hop_relations = sorted(one_hop_relations, key=lambda x: key_func(x))
+
+            ent_info = label
+            for rel in one_hop_relations[:3]:
+                if self.normalize_relations:
+                    ent_info += (self.SEPERATOR + _textualize_relation(rel))
+                else:
+                    ent_info += (self.SEPERATOR + rel)
+            
+            ent_src = input_src
+            if self.add_prefix:
+                ent_src = 'Entity Classification: ' + input_src
+            
+            if self.do_lower:
+                ent_info = ent_info.lower()
+                ent_src = ent_src.lower()
+            
+            tokenized_entity_pair = self.tokenizer(
+                ent_src,
+                ent_info, 
+                max_length=self.max_src_len,
+                truncation=True,
+                return_tensors='pt'
+            ).data['input_ids'].squeeze(0)
+
+            tokenized_entity_clf_pairs.append(tokenized_entity_pair)
+
+        return (
+            tokenized_src, 
+            tokenized_tgt, 
+            tokenized_relation_clf_pairs, 
+            relation_clf_pairs_labels,
+            [input_src],
+            candidate_relations,
+            tokenized_entity_clf_pairs,
+            entity_clf_pairs_labels,
+            example.cand_entity_list,
+            tokenized_src_concatenated,
+            tokenized_src_concatenated_goldE_candR,
+            tokenized_src_concatenated_candE_goldR,
+            tokenized_src_golden_concatenated
+        )
+
+
+
+def _textualize_relation(r):
+    """return a relation string with '_' and '.' replaced"""
+    if "_" in r: # replace "_" with " "
+        r = r.replace("_", " ")
+    if "." in r: # replace "." with " , "
+        r = r.replace(".", " , ")
+    return r       
+        

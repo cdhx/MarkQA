@@ -8,7 +8,7 @@
 
 >MarkQA is a lare-scale dataset for question answering on knowledge bases (KBQA) on Wikidata, with 31,902 questions. Each quesstion is annotated with answers, SPARQL, QDMR and PyQL. It is the first dataset focus on complex numerical reasoning in KBQA.
 
->This is the accompanying code for the paper "[MarkQA: A large scale KBQA dataset with numerical reasoning](http://arxiv.org/abs/2310.15517)" published at EMNLP 2023. For dataset and leaderboard, please refer to the [homepage of MarkQA](http://ws.nju.edu.cn/MarkQA). The document of PyQL can be found in [document of PyQL](https://shanshan-huang-1.gitbook.io/pyql-wen-dang/). In this repository, we provide the code for the baseline models for reproducibility and demonstrate how to work with this dataset.
+>This is the accompanying code for the paper "[MarkQA: A large scale KBQA dataset with numerical reasoning](http://arxiv.org/abs/2310.15517)" published at EMNLP 2023. For dataset and leaderboard, please refer to the [homepage of MarkQA](http://114.212.81.217/). In this repository, we provide the code for the baseline models for reproducibility and demonstrate how to work with this dataset.
   
  
 
@@ -61,14 +61,50 @@ This repository is structured as follows:
 
 ```
 MarkQA/
-├─ dataset/: Data files for training, validation, and test.
-├─ PyQL_parser.py: The implementation of PyQL.
-├─ T5/: Baseline method of T5, coming soon!
-├─ GMT-KBQA/: Baseline method of GMT-KBQA, coming soon!
-└── QDTQA/: Baseline method of QDTQA, coming soon!
+├── baselines: Baseline method of T5, GMT and QDTQA
+├── dataset: Data files for training, validation, and test.
+├── environment.yaml
+├── PyQL_parser.py: The implementation of PyQL.
+└── readme.md
 ```  
 
+# How to run
 
+## Prepare
+Download the data needed [here](https://drive.google.com/drive/folders/1tRtz5W7b9jVQBdNALNKopnxbKnvaFJYU?usp=sharing) and put all json files under `baselines/linked_dataset_example/`.  
+Download the huggingface t5-base model [here](https://drive.google.com/drive/folders/1KWfCd9Ukz_JLSYgWDpTocwSgHOYJ0gfV?usp=sharing) and put all files under `baselines/QDTQA/hfcache/t5-base`.  
+
+## Environment
+You may create a conda environment according to configuration file `environment.yaml`:
+```
+conda env create -f environment.yaml 
+```
+## Using T5
+* predict_type can be set to SPARQL or PyQL
+* golden_type can be set to goldER, goldEcandR, goldRcandE, candEcandR
+* outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
+```
+cd baselines/
+./run_model_train.sh T5 {predict_type} {golden_type} {exp_id} {gpu_id}
+```
+
+## Using GMT
+* predict_type can be set to SPARQL or PyQL
+* outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
+```
+cd baselines/
+./run_model_train.sh GMT {predict_type} {golden_type} {exp_id} {gpu_id}
+```
+
+## Using QDTQA
+* predict_type can be set to SPARQL or PyQL
+* golden_type can be set to goldE, candE
+* outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
+```
+cd baselines/
+./run_model_train.sh QDTQA {predict_type} {golden_type} {exp_id} {gpu_id}
+```
+You may go to baselines/scripts to modify model or training parameters freely.
 
 # Cite
 ```bibtex
@@ -78,6 +114,6 @@ title={Mark{QA}: A large scale {KBQA} dataset with numerical reasoning},
 author={Xiang Huang, Sitao Cheng, Yuheng Bao, Shanshan Huang, Yuzhong Qu },
 booktitle={The 2023 Conference on Empirical Methods in Natural Language Processing},
 year={2023},
-url={https://arxiv.org/abs/2310.15517}
+url={https://openreview.net/forum?id=NYstQhld8J}
 }
 ```
