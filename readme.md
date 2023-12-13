@@ -73,16 +73,21 @@ MarkQA/
 ## Prepare
 Download the data needed [here](https://drive.google.com/drive/folders/1tRtz5W7b9jVQBdNALNKopnxbKnvaFJYU?usp=sharing) and put all json files under `baselines/linked_dataset_example/`.  
 Download the huggingface t5-base model [here](https://drive.google.com/drive/folders/1KWfCd9Ukz_JLSYgWDpTocwSgHOYJ0gfV?usp=sharing) and put all files under `baselines/QDTQA/hfcache/t5-base`.  
+```
+chmod +x baselines/run_model_train.sh
+chmod +x baselines/scripts/*
+```
 
 ## Environment
 You may create a conda environment according to configuration file `environment.yaml`:
 ```
-conda env create -f environment.yaml 
+conda env create -f environment.yaml
 ```
 ## Using T5
 * predict_type can be set to SPARQL or PyQL
 * outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
 ```
+conda activate QDTenv
 cd baselines/
 ./run_model_train.sh T5 {predict_type} {exp_id} {gpu_id}
 ```
@@ -91,6 +96,7 @@ cd baselines/
 * predict_type can be set to SPARQL or PyQL
 * outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
 ```
+conda activate QDTenv
 cd baselines/
 ./run_model_train.sh GMT {predict_type} {exp_id} {gpu_id}
 ```
@@ -99,6 +105,7 @@ cd baselines/
 * predict_type can be set to SPARQL or PyQL
 * outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
 ```
+conda activate QDTenv
 cd baselines/
 ./run_model_train.sh QDTQA {predict_type} {exp_id} {gpu_id}
 ```

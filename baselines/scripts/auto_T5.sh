@@ -9,6 +9,8 @@ predict_split="dev"
 exp_prefix="../outputs/${exp_id}_T5_${predict_type}_${golden_type}/"
 
 cd ../GMT-KBQA
+
+
 if [ -d ${exp_prefix} ]; then
     echo "${exp_prefix} already exists"
 else
