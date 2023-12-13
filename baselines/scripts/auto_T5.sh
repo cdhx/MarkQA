@@ -1,12 +1,10 @@
-golden_type=$1   #gold_all / none
-predict_type=$2   #qdt/subf/sparql
-exp_id=$3
+predict_type=$1   #qdt/subf/sparql
+exp_id=$2
 
 mrak_version="official"
 dataset_dir=../linked_dataset_example #directory of mark dataset (linked)
 predict_split="dev"
 
-echo "p1:${1} p2:${2} p3:${3}"
 
 exp_prefix="../outputs/${exp_id}_T5_${predict_type}_${golden_type}/"
 
@@ -31,264 +29,53 @@ else
     train_bs=4
 fi
 
-#["goldER","goldEcandR","goldRcandE","candEcandR"]
 
 
-if [ "$golden_type" = "goldER" ]; then
-    if [ -e "${exp_prefix}model_saved/pytorch_model.bin" ]; then
-        echo  "Model is ready for evaluation"
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation_concat \
-                                --concat_golden_relation \
-                                --concat_golden_entity \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt"
-    else
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_train \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --epochs 30 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 20 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation_concat \
-                                --concat_golden_relation \
-                                --concat_golden_entity \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt"
-    fi
-elif [ "$golden_type" = "goldEcandR" ]; then
-    if [ -e "${exp_prefix}model_saved/pytorch_model.bin" ]; then
-        echo  "Model is ready for evaluation"
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation_concat \
-                                --concat_golden_entity \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt"
-    else
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_train \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --epochs 30 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation_concat \
-                                --concat_golden_entity \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt"
-    fi
-
-elif [ "$golden_type" = "goldRcandE" ]; then
-    if [ -e "${exp_prefix}model_saved/pytorch_model.bin" ]; then
-        echo  "Model is ready for evaluation"
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation_concat \
-                                --concat_golden_relation \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt"
-    else
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_train \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --epochs 30 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation_concat \
-                                --concat_golden_relation \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt"
-    fi
-
-elif [ "$golden_type" = "candEcandR" ]; then
-    if [ -e "${exp_prefix}model_saved/pytorch_model.bin" ]; then
-        echo  "Model is ready for evaluation"
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation_concat \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt"
-    else
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_train \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --epochs 30 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation_concat \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt"
-    fi
+if [ -e "${exp_prefix}model_saved/pytorch_model.bin" ]; then
+    echo  "Model is ready for evaluation"
+    python run_multitask_generator_final.py \
+                            --mrak_version ${mrak_version} \
+                            --dataset_dir ${dataset_dir} \
+                            --do_predict \
+                            --predict_split ${predict_split} \
+                            --max_tgt_len ${max_tgt_len} \
+                            --max_src_len 256 \
+                            --lr 5e-5 \
+                            --${pred_type} \
+                            --eval_beams 25 \
+                            --iters_to_accumulate 1 \
+                            --pretrained_model_path t5-base \
+                            --output_dir ${exp_prefix} \
+                            --model_save_dir "${exp_prefix}model_saved" \
+                            --overwrite_output_dir \
+                            --normalize_relations \
+                            --sample_size 10 \
+                            --model T5_generation_concat \
+                            --train_batch_size ${train_bs} \
+                            --eval_batch_size 4 \
+                            --test_batch_size 4 | tee "${exp_prefix}log.txt"
 else
-    if [ -e "${exp_prefix}model_saved/pytorch_model.bin" ]; then
-        echo  "Model is ready for evaluation"
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt" \
-                                
-    else
-        python run_multitask_generator_final.py \
-                                --mrak_version ${mrak_version} \
-                                --dataset_dir ${dataset_dir} \
-                                --do_train \
-                                --do_predict \
-                                --predict_split ${predict_split} \
-                                --max_tgt_len ${max_tgt_len} \
-                                --max_src_len 256 \
-                                --epochs 30 \
-                                --lr 5e-5 \
-                                --${pred_type} \
-                                --eval_beams 25 \
-                                --iters_to_accumulate 1 \
-                                --pretrained_model_path t5-base \
-                                --output_dir ${exp_prefix} \
-                                --model_save_dir "${exp_prefix}model_saved" \
-                                --overwrite_output_dir \
-                                --normalize_relations \
-                                --sample_size 10 \
-                                --model T5_generation \
-                                --train_batch_size ${train_bs} \
-                                --eval_batch_size 4 \
-                                --test_batch_size 4 | tee "${exp_prefix}log.txt" \
-
-    fi
+    python run_multitask_generator_final.py \
+                            --mrak_version ${mrak_version} \
+                            --dataset_dir ${dataset_dir} \
+                            --do_train \
+                            --do_predict \
+                            --predict_split ${predict_split} \
+                            --max_tgt_len ${max_tgt_len} \
+                            --max_src_len 256 \
+                            --epochs 30 \
+                            --lr 5e-5 \
+                            --${pred_type} \
+                            --eval_beams 25 \
+                            --iters_to_accumulate 1 \
+                            --pretrained_model_path t5-base \
+                            --output_dir ${exp_prefix} \
+                            --model_save_dir "${exp_prefix}model_saved" \
+                            --overwrite_output_dir \
+                            --normalize_relations \
+                            --sample_size 10 \
+                            --model T5_generation_concat \
+                            --train_batch_size ${train_bs} \
+                            --eval_batch_size 4 \
+                            --test_batch_size 4 | tee "${exp_prefix}log.txt"
 fi

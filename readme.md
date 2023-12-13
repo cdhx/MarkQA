@@ -81,11 +81,10 @@ conda env create -f environment.yaml
 ```
 ## Using T5
 * predict_type can be set to SPARQL or PyQL
-* golden_type can be set to goldER, goldEcandR, goldRcandE, candEcandR
 * outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
 ```
 cd baselines/
-./run_model_train.sh T5 {predict_type} {golden_type} {exp_id} {gpu_id}
+./run_model_train.sh T5 {predict_type} {exp_id} {gpu_id}
 ```
 
 ## Using GMT
@@ -93,16 +92,15 @@ cd baselines/
 * outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
 ```
 cd baselines/
-./run_model_train.sh GMT {predict_type} {golden_type} {exp_id} {gpu_id}
+./run_model_train.sh GMT {predict_type} {exp_id} {gpu_id}
 ```
 
 ## Using QDTQA
 * predict_type can be set to SPARQL or PyQL
-* golden_type can be set to goldE, candE
 * outputs will be saved at `baselines/outputs/`, its directory name starts with exp_id
 ```
 cd baselines/
-./run_model_train.sh QDTQA {predict_type} {golden_type} {exp_id} {gpu_id}
+./run_model_train.sh QDTQA {predict_type} {exp_id} {gpu_id}
 ```
 You may go to baselines/scripts to modify model or training parameters freely.
 

@@ -1,13 +1,11 @@
 
-golden_type=$1    #none
-predict_type=$2   #qdt/subf/sparql
-exp_id=$3
+predict_type=$1   #qdt/subf/sparql
+exp_id=$2
 
 mrak_version="official"
 dataset_dir=../linked_dataset_example #directory of mark dataset (linked)
 predict_split="dev"
 
-echo "p1:${1} p2:${2} p3:${3}"
 
 exp_prefix="../outputs/${exp_id}_GMT_${predict_type}_${golden_type}/"
 
