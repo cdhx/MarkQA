@@ -6,9 +6,9 @@
 [![paper](https://img.shields.io/badge/Paper-EMNLP2023-lightgrey?style=flat-square)](https://arxiv.org/abs/2310.15517)
 <img width="1175" alt="image" src="https://raw.githubusercontent.com/cdhx/img_store/main/markqa.png">
 
->MarkQA is a lare-scale dataset for question answering on knowledge bases (KBQA) on Wikidata, with 31,902 questions. Each quesstion is annotated with answers, SPARQL, QDMR and PyQL. It is the first dataset focus on complex numerical reasoning in KBQA.
+>MarkQA is a large-scale dataset for question answering on knowledge bases (KBQA) on Wikidata, with 31,902 questions. Each question is annotated with answers, SPARQL, QDMR, and PyQL. It is the first dataset to focus on complex numerical reasoning in KBQA.
 
->This is the accompanying code for the paper "[MarkQA: A large scale KBQA dataset with numerical reasoning](http://arxiv.org/abs/2310.15517)" published at EMNLP 2023. For dataset and leaderboard, please refer to the [homepage of MarkQA](http://ws.nju.edu.cn/MarkQA). In this repository, we provide the code for the baseline models for reproducibility and demonstrate how to work with this dataset.
+>This is the accompanying code for the paper "[MarkQA: A large scale KBQA dataset with numerical reasoning](http://arxiv.org/abs/2310.15517)" published at EMNLP 2023. For the dataset and leaderboard, please refer to the [homepage of MarkQA](http://ws.nju.edu.cn/MarkQA). The document of PyQL can be found in [document of PyQL](https://shanshan-huang-1.gitbook.io/pyql-wen-dang/). In this repository, we provide the code for the baseline models for reproducibility and demonstrate how to work with this dataset.
   
  
 
@@ -20,11 +20,11 @@ The instructions for setting up a SPARQL endpoint to Wikidata for MarkQA via Vir
 * Python 3 (required if using the provided Python script)
 ## Set up
 
-Our processed Virtuoso DB file are split into two files. 
+Our processed Virtuoso DB files are split into two files. 
 They can be downloaded via wget and then be put together via cat:
 
-(WARNING: 200G+ disk space is needed for the ziped file and 440G+ disk space is needed for the unziped file)
-```linux
+(WARNING: 200G+ disk space is needed for the zipped file and 440G+ disk space is needed for the unzipped file)
+```Linux
 wget https://box.nju.edu.cn/f/edd62b714b6b4fefb84e/?dl=1 -O virtuoso_db_part1
 wget https://box.nju.edu.cn/f/3b0986513ff2409db5df/?dl=1 -O virtuoso_db_part2
 cat virtuoso_db_part1 virtuoso_db_part2 >virtuoso_db.zip
@@ -62,7 +62,7 @@ This repository is structured as follows:
 ```
 MarkQA/
 ├── baselines: Baseline method of T5, GMT and QDTQA
-├── dataset: Data files for training, validation, and test.
+├── dataset: Data files for training, validation, and testing.
 ├── environment.yaml
 ├── PyQL_parser.py: The implementation of PyQL.
 └── readme.md
@@ -79,7 +79,7 @@ chmod +x baselines/scripts/*
 ```
 
 ## Environment
-You may create a conda environment according to configuration file `environment.yaml`:
+You may create a conda environment according to the configuration file `environment.yaml`:
 ```
 conda env create -f environment.yaml
 ```
@@ -109,7 +109,7 @@ conda activate QDTenv
 cd baselines/
 ./run_model_train.sh QDTQA {predict_type} {exp_id} {gpu_id}
 ```
-You may go to baselines/scripts to modify model or training parameters freely.
+You may go to baselines/scripts to modify the model or training parameters freely.
 
 # Cite
 ```bibtex
@@ -119,6 +119,6 @@ title={Mark{QA}: A large scale {KBQA} dataset with numerical reasoning},
 author={Xiang Huang, Sitao Cheng, Yuheng Bao, Shanshan Huang, Yuzhong Qu },
 booktitle={The 2023 Conference on Empirical Methods in Natural Language Processing},
 year={2023},
-url={https://openreview.net/forum?id=NYstQhld8J}
+url={https://arxiv.org/abs/2310.15517}
 }
 ```
