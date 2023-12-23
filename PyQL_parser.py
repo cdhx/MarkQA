@@ -159,7 +159,7 @@ class PyQL():
 
         self.set_answer(tag)
         return tag
-    def add_quantity_with_qualifier(self,entity,main_prop,qualifier_prop,qualifier_obj,tag,unit=False):
+    def add_quantity_with_qualifier(self,entity,main_prop,qualifier_prop,qualifier_obj,tag):
         '''
         add a quantity fact which is constrained by a qualifier,here is an example
         <wd:Q110646789(Nvidia GeForce RTX 3090), p:P7256(computer performance), 	wds:Q122655985-4f6ef776-496b-c9ec-19fb-9e14a0df0303>
@@ -180,14 +180,9 @@ class PyQL():
         qualifier_obj_with_prefix= 'wd:' + qualifier_obj if qualifier_obj[0]=='Q' else qualifier_obj
         tag= self.__check_ent_format(tag)[1:]
 
-        if unit:
-            statement_var = "?statement_" + tag
-            value_var = '?non_si_' + tag
-            value_st_var = "?non_si_value_st_" + tag
-        else:
-            statement_var="?statement_" + tag
-            value_var='?'+tag
-            value_st_var="?value_st_" + tag
+         statement_var="?statement_" + tag
+         value_var='?'+tag
+         value_st_var="?value_st_" + tag
 
         self.add_triple_pattern(entity_with_prefix + " p:" + main_prop + " " + statement_var + "." )
         self.add_triple_pattern(statement_var + " psv:" + main_prop + " " + value_st_var + ".")
