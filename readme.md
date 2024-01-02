@@ -113,12 +113,20 @@ You may go to baselines/scripts to modify the model or training parameters freel
 
 # Cite
 ```bibtex
-@inproceedings{
-huang2023markqa,
-title={Mark{QA}: A large scale {KBQA} dataset with numerical reasoning},
-author={Xiang Huang, Sitao Cheng, Yuheng Bao, Shanshan Huang, Yuzhong Qu },
-booktitle={The 2023 Conference on Empirical Methods in Natural Language Processing},
-year={2023},
-url={https://arxiv.org/abs/2310.15517}
+@inproceedings{huang-etal-2023-markqa,
+    title = "{M}ark{QA}: A large scale {KBQA} dataset with numerical reasoning",
+    author = "Huang, Xiang  and
+      Cheng, Sitao  and
+      Bao, Yuheng  and
+      Huang, Shanshan  and
+      Qu, Yuzhong", 
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.633",
+    doi = "10.18653/v1/2023.emnlp-main.633",
+    pages = "10241--10259", 
 }
 ```
